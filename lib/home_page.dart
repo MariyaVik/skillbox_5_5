@@ -10,11 +10,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   void openBottomSheet(BuildContext context) {
     showModalBottomSheet(
-        context: context,
-        builder: (context) => Container(
-              color: Colors.purple,
-              height: 200,
-            ));
+        context: context, builder: (context) => _myBottomSheet());
   }
 
   @override
@@ -59,16 +55,21 @@ class _HomePageState extends State<HomePage> {
                 )
               ]),
             ),
-            Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
-              ElevatedButton(
-                onPressed: () {},
-                child: Text("Вход"),
-              ),
-              ElevatedButton(
-                onPressed: () {},
-                child: Text("Регистрация"),
-              ),
-            ])
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    ElevatedButton(
+                      onPressed: () {},
+                      child: Text("Вход"),
+                    ),
+                    ElevatedButton(
+                      onPressed: () {},
+                      child: Text("Регистрация"),
+                    ),
+                  ]),
+            )
           ],
         ),
       ),
@@ -92,6 +93,34 @@ class _HomePageState extends State<HomePage> {
         onPressed: () => openBottomSheet(context),
         child: Icon(Icons.add),
       ),
+    );
+  }
+}
+
+class _myBottomSheet extends StatelessWidget {
+  const _myBottomSheet({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+      height: 200,
+      child: Column(children: [
+        Row(
+          children: [
+            Icon(Icons.payment),
+            SizedBox(width: 10),
+            Expanded(child: Text("Сумма")),
+            Text("200 руб."),
+          ],
+        ),
+        ElevatedButton(
+          child: Text("Оплатить"),
+          onPressed: () {},
+        )
+      ]),
     );
   }
 }
