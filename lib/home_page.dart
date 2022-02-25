@@ -7,10 +7,36 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageState extends State<HomePage>
+    with SingleTickerProviderStateMixin {
+  List<TabItem> tabBar = [
+    TabItem(title: "Home", icon: Icon(Icons.home)),
+    TabItem(title: "Chat", icon: Icon(Icons.chat)),
+    TabItem(title: "Photo", icon: Icon(Icons.photo)),
+  ];
+
+  int _selectedIndex = 0;
+
+  late TabController _tabController;
+
+  @override
+  void initState() {
+    super.initState();
+    _tabController = TabController(vsync: this, length: tabBar.length);
+    _tabController.addListener(() {
+      _selectedIndex = _tabController.index;
+      setState(() {});
+    });
+  }
+
   void openBottomSheet(BuildContext context) {
     showModalBottomSheet(
         context: context, builder: (context) => _myBottomSheet());
+  }
+
+  void _onItemTapped(int index) {
+    _tabController.index = index;
+    setState(() {});
   }
 
   @override
@@ -36,19 +62,19 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
                 ListTile(
-                  title: Text("Home"),
+                  title: Text("Profile"),
                   leading: Icon(Icons.home),
                   trailing: Icon(Icons.arrow_forward),
                   onTap: () {},
                 ),
                 ListTile(
-                  title: Text("Home"),
+                  title: Text("Images"),
                   leading: Icon(Icons.home),
                   trailing: Icon(Icons.arrow_forward),
                   onTap: () {},
                 ),
                 ListTile(
-                  title: Text("Home"),
+                  title: Text("Files"),
                   leading: Icon(Icons.home),
                   trailing: Icon(Icons.arrow_forward),
                   onTap: () {},
@@ -62,7 +88,7 @@ class _HomePageState extends State<HomePage> {
                   children: [
                     ElevatedButton(
                       onPressed: () {},
-                      child: Text("Вход"),
+                      child: Text("Выход"),
                     ),
                     ElevatedButton(
                       onPressed: () {},
@@ -73,26 +99,32 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
       ),
-      bottomNavigationBar: BottomNavigationBar(items: [
-        BottomNavigationBarItem(
-          icon: Icon(
-            Icons.home,
-          ),
-          label: "1",
+      body: TabBarView(controller: _tabController, children: [
+        Container(
+          color: Colors.green,
         ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.chat),
-          label: "2",
+        Container(
+          color: Colors.red,
         ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.photo),
-          label: "3",
-        ),
+        Container(
+          color: Colors.blue,
+        )
       ]),
+      bottomNavigationBar: BottomNavigationBar(
+          currentIndex: _selectedIndex,
+          onTap: _onItemTapped,
+          items: [
+            for (var item in tabBar)
+              BottomNavigationBarItem(
+                icon: item.icon,
+                label: item.title,
+              )
+          ]),
       floatingActionButton: FloatingActionButton(
         onPressed: () => openBottomSheet(context),
         child: Icon(Icons.add),
       ),
+      // endDrawer: Drawer(),
     );
   }
 }
@@ -123,4 +155,10 @@ class _myBottomSheet extends StatelessWidget {
       ]),
     );
   }
+}
+
+class TabItem {
+  String title;
+  Icon icon;
+  TabItem({required this.title, required this.icon});
 }
