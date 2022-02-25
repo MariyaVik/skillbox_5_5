@@ -45,10 +45,14 @@ class _HomePageState extends State<HomePage>
       appBar: AppBar(
         title: Text("Homework 5.5"),
         actions: [
-          IconButton(
-            icon: Icon(Icons.person),
-            onPressed: () {},
-          )
+          Builder(builder: (context) {
+            return IconButton(
+              icon: Icon(Icons.person),
+              onPressed: () {
+                Scaffold.of(context).openEndDrawer();
+              },
+            );
+          })
         ],
       ),
       drawer: Drawer(
@@ -59,6 +63,7 @@ class _HomePageState extends State<HomePage>
                 DrawerHeader(
                   child: CircleAvatar(
                     backgroundColor: Colors.purple,
+                    backgroundImage: NetworkImage('https://picsum.photos/200'),
                   ),
                 ),
                 ListTile(
@@ -124,7 +129,20 @@ class _HomePageState extends State<HomePage>
         onPressed: () => openBottomSheet(context),
         child: Icon(Icons.add),
       ),
-      // endDrawer: Drawer(),
+      endDrawer: Drawer(
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              CircleAvatar(
+                radius: 50,
+                backgroundImage: NetworkImage('https://picsum.photos/200'),
+              ),
+              Text('My name is...'),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }
