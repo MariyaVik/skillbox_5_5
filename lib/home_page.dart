@@ -1,5 +1,11 @@
 import 'package:flutter/material.dart';
 
+class TabItem {
+  String title;
+  Icon icon;
+  TabItem({required this.title, required this.icon});
+}
+
 class HomePage extends StatefulWidget {
   HomePage({Key? key}) : super(key: key);
 
@@ -57,64 +63,23 @@ class _HomePageState extends State<HomePage>
       ),
       drawer: Drawer(
         child: Column(
-          children: [
-            Expanded(
-              child: ListView(children: [
-                DrawerHeader(
-                  child: CircleAvatar(
-                    backgroundColor: Colors.purple,
-                    backgroundImage: NetworkImage('https://picsum.photos/200'),
-                  ),
-                ),
-                ListTile(
-                  title: Text("Profile"),
-                  leading: Icon(Icons.home),
-                  trailing: Icon(Icons.arrow_forward),
-                  onTap: () {},
-                ),
-                ListTile(
-                  title: Text("Images"),
-                  leading: Icon(Icons.home),
-                  trailing: Icon(Icons.arrow_forward),
-                  onTap: () {},
-                ),
-                ListTile(
-                  title: Text("Files"),
-                  leading: Icon(Icons.home),
-                  trailing: Icon(Icons.arrow_forward),
-                  onTap: () {},
-                )
-              ]),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    ElevatedButton(
-                      onPressed: () {},
-                      child: Text("Выход"),
-                    ),
-                    ElevatedButton(
-                      onPressed: () {},
-                      child: Text("Регистрация"),
-                    ),
-                  ]),
-            )
-          ],
+          children: [MainElementsDrawerWidget(), FooterButtonsDrawerWidget()],
         ),
       ),
-      body: TabBarView(controller: _tabController, children: [
-        Container(
-          color: Colors.green,
-        ),
-        Container(
-          color: Colors.red,
-        ),
-        Container(
-          color: Colors.blue,
-        )
-      ]),
+      body: TabBarView(
+        controller: _tabController,
+        children: [
+          Container(
+            color: Colors.green,
+          ),
+          Container(
+            color: Colors.red,
+          ),
+          Container(
+            color: Colors.blue,
+          ),
+        ],
+      ),
       bottomNavigationBar: BottomNavigationBar(
           currentIndex: _selectedIndex,
           onTap: _onItemTapped,
@@ -136,13 +101,76 @@ class _HomePageState extends State<HomePage>
             children: [
               CircleAvatar(
                 radius: 50,
-                backgroundImage: NetworkImage('https://picsum.photos/200'),
+                backgroundImage:
+                    NetworkImage('https://loremflickr.com/200/200/dog'),
               ),
               Text('My name is...'),
             ],
           ),
         ),
       ),
+    );
+  }
+}
+
+class FooterButtonsDrawerWidget extends StatelessWidget {
+  const FooterButtonsDrawerWidget({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
+        ElevatedButton(
+          onPressed: () {},
+          child: Text("Выход"),
+        ),
+        ElevatedButton(
+          onPressed: () {},
+          child: Text("Регистрация"),
+        ),
+      ]),
+    );
+  }
+}
+
+class MainElementsDrawerWidget extends StatelessWidget {
+  const MainElementsDrawerWidget({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: ListView(children: [
+        DrawerHeader(
+          child: CircleAvatar(
+            backgroundColor: Colors.purple,
+            backgroundImage:
+                NetworkImage('https://loremflickr.com/240/240/dog'),
+          ),
+        ),
+        ListTile(
+          title: Text("Profile"),
+          leading: Icon(Icons.home),
+          trailing: Icon(Icons.arrow_forward),
+          onTap: () {},
+        ),
+        ListTile(
+          title: Text("Images"),
+          leading: Icon(Icons.home),
+          trailing: Icon(Icons.arrow_forward),
+          onTap: () {},
+        ),
+        ListTile(
+          title: Text("Files"),
+          leading: Icon(Icons.home),
+          trailing: Icon(Icons.arrow_forward),
+          onTap: () {},
+        )
+      ]),
     );
   }
 }
@@ -173,10 +201,4 @@ class _myBottomSheet extends StatelessWidget {
       ]),
     );
   }
-}
-
-class TabItem {
-  String title;
-  Icon icon;
-  TabItem({required this.title, required this.icon});
 }
